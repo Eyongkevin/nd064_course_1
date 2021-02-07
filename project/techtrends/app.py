@@ -3,11 +3,16 @@ import sqlite3
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash, make_response
 from werkzeug.exceptions import abort
 
+# define a global variable to count number of connections to the database
+CON_COUNT = 0
 # Function to get a database connection.
 # This function connects to database with the name `database.db`
 def get_db_connection():
+    global CON_COUNT
     connection = sqlite3.connect('database.db')
     connection.row_factory = sqlite3.Row
+    # increment for reach connection
+    CON_COUNT += 1
     return connection
 
 # Function to get a post using its ID
@@ -74,8 +79,14 @@ def health():
 # define the route to access metrics 
 @app.route('/metrics')
 def metric():
-    data = {"UserCount": 140, "UserCountActive": 23}
+    # Connect and get all posts to determine the number of posts
+    connection = get_db_connection()
+    posts = connection.execute('SELECT * FROM posts').fetchall()
+    connection.close()
+
+    data = {"db_connection_count": CON_COUNT, "post_count": len(posts)}
     return make_response(jsonify(data), 200)
+
 # start the application on port 3111
 if __name__ == "__main__":
    app.run(host='0.0.0.0', port='3111')
