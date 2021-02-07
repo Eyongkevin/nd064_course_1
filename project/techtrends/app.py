@@ -2,6 +2,7 @@ import sqlite3
 
 from flask import Flask, jsonify, json, render_template, request, url_for, redirect, flash, make_response
 from werkzeug.exceptions import abort
+import logging, sys
 
 # define a global variable to count number of connections to the database
 CON_COUNT = 0
@@ -37,12 +38,14 @@ def index():
 
 # Define how each individual article is rendered 
 # If the post ID is not found a 404 page is shown
-@app.route('/<int:post_id>')
+@app.route('/post/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
     if post is None:
       return render_template('404.html'), 404
     else:
+      # log article that just got retrieved.
+      app.logger.info('Article "{}" retrieved!'.format(post['title']))
       return render_template('post.html', post=post)
 
 # Define the About Us page
@@ -65,6 +68,8 @@ def create():
                          (title, content))
             connection.commit()
             connection.close()
+            # log article title that just got created
+            app.logger.info('Article "{}" created!'.format(title))
 
             return redirect(url_for('index'))
 
@@ -89,4 +94,13 @@ def metric():
 
 # start the application on port 3111
 if __name__ == "__main__":
+    # set logger to handle STDOUT and STDERR
+   stdout_handler = logging.StreamHandler(sys.stdout) # stdout handler 
+   stderr_handler = logging.StreamHandler(sys.stderr) # stderr handler 
+   handlers = [stderr_handler, stdout_handler]
+   # format output
+   format_output = '%(levelname)s: %(name)-2s - [%(asctime)s] - %(message)s'
+   
+   logging.basicConfig(format=format_output, level=logging.DEBUG, handlers=handlers)
+
    app.run(host='0.0.0.0', port='3111')
