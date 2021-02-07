@@ -38,7 +38,7 @@ def index():
 
 # Define how each individual article is rendered 
 # If the post ID is not found a 404 page is shown
-@app.route('/post/<int:post_id>')
+@app.route('/<int:post_id>')
 def post(post_id):
     post = get_post(post_id)
     if post is None:
