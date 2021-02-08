@@ -5,7 +5,22 @@
 `docker run -d -p 127.0.0.1:7111:3111/tcp techtrends`
 
 ## Docker commands used to get the application logs
-# TODO: insert the docker logs command
+`docker logs 5786837525b5`
 
 ## Logs from the container running the TechTrends application
-# TODO: paste logs from the Docker container 
+```
+INFO: werkzeug - [2021-02-07 19:21:55,742] -  * Running on http://0.0.0.0:3111/ (Press CTRL+C to quit)
+INFO: app - [2021-02-07 19:22:24,943] - Article "Kubernetes v1.20 Release Notes" retrieved!
+INFO: werkzeug - [2021-02-07 19:22:24,984] - 172.17.0.1 - - [07/Feb/2021 19:22:24] "GET /3 HTTP/1.1" 200 -
+INFO: werkzeug - [2021-02-07 19:22:25,065] - 172.17.0.1 - - [07/Feb/2021 19:22:25] "GET /static/css/main.css HTTP/1.1" 200 -
+INFO: werkzeug - [2021-02-07 19:22:25,139] - 172.17.0.1 - - [07/Feb/2021 19:22:25] "GET /favicon.ico HTTP/1.1" 404 -
+INFO: werkzeug - [2021-02-07 19:26:11,690] - 172.17.0.1 - - [07/Feb/2021 19:26:11] "GET / HTTP/1.1" 200 -
+INFO: app - [2021-02-07 19:26:23,163] - Article "2020 CNCF Annual Report" retrieved!
+INFO: werkzeug - [2021-02-07 19:26:23,166] - 172.17.0.1 - - [07/Feb/2021 19:26:23] "GET /1 HTTP/1.1" 200 -
+INFO: werkzeug - [2021-02-07 19:30:43,487] - 172.17.0.1 - - [07/Feb/2021 19:30:43] "GET / HTTP/1.1" 200 -
+INFO: werkzeug - [2021-02-07 19:38:59,804] - 172.17.0.1 - - [07/Feb/2021 19:38:59] "GET /about HTTP/1.1" 200 -
+INFO: werkzeug - [2021-02-07 19:39:01,394] - 172.17.0.1 - - [07/Feb/2021 19:39:01] "GET /create HTTP/1.1" 200 -
+INFO: app - [2021-02-07 19:39:28,573] - Article "My year of supernatural grace" created!
+INFO: werkzeug - [2021-02-07 19:39:28,576] - 172.17.0.1 - - [07/Feb/2021 19:39:28] "POST /create HTTP/1.1" 302 -
+INFO: werkzeug - [2021-02-07 19:39:28,593] - 172.17.0.1 - - [07/Feb/2021 19:39:28] "GET / HTTP/1.1" 200 -
+```
