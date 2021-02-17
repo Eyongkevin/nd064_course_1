@@ -42,6 +42,8 @@ def index():
 def post(post_id):
     post = get_post(post_id)
     if post is None:
+      # log when non-existent article is retrieved
+      app.logger.info('Article with Id: {} does not exist!'.format(post_id))
       return render_template('404.html'), 404
     else:
       # log article that just got retrieved.
@@ -51,6 +53,8 @@ def post(post_id):
 # Define the About Us page
 @app.route('/about')
 def about():
+    # log when "About Us" page is accessed
+    app.logger.info('"About Us" page accessed!')
     return render_template('about.html')
 
 # Define the post creation functionality 
